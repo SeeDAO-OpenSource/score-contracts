@@ -1,5 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("@nomiclabs/hardhat-etherscan");
+require("@nomicfoundation/hardhat-verify");
 require('@openzeppelin/hardhat-upgrades');
 require("dotenv").config();
 require("./tasks/1_sumScores");
