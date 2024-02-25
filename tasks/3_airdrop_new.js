@@ -4,7 +4,7 @@ task("airdrop", "Airdrop to a list of accounts")
     .addParam("contract", "The `Score` contract address")
     .addParam("input", "The input json file with accounts and amounts")
     .setAction(async (taskArgs, hre) => {
-        const owner = await hre.ethers.getSigner(0);
+        const [owner] = await hre.ethers.getSigners();
 
         // for (const account of accounts) {
         //     console.log(account.address);
@@ -18,7 +18,7 @@ task("airdrop", "Airdrop to a list of accounts")
         let accounts = [];
         let amounts = [];
         for (var i = 0; i < data.length; i++) {
-            let realAmount = ethers.utils.parseEther(data[i].amount);
+            let realAmount = ethers.parseEther(data[i].amount);
             data[i]["realAmount"] = realAmount;
             // budget = budget.add(realAmount);
             accounts.push(data[i].account);
@@ -46,7 +46,7 @@ task("airdrop", "Airdrop to a list of accounts")
 task("snapshot", "Snapshot the Score contract")
     .addParam("contract", "The `Score` contract address")
     .setAction(async (taskArgs, hre) => {
-        const owner = await hre.ethers.getSigner(0);
+        const [owner] = await hre.ethers.getSigners();
         const Score = await hre.ethers.getContractFactory("Score");
         const score = await Score.attach(taskArgs.contract);
         let snapshotId = await score.getCurrentSnapshotId();
